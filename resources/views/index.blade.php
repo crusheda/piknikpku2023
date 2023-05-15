@@ -7,6 +7,10 @@
 
 	<title>Reservasi Bus Piknik 2023</title>
 
+    <!-- App favicon -->
+    <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('img/pku_ico.png') }}">
+    <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('img/pku_ico.png') }}">
+
 	<!-- Google font -->
 	{{-- <link href="https://fonts.googleapis.com/css?family=Cabin:400,700" rel="stylesheet"> --}}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -213,7 +217,7 @@
         }
     </script>
     <div class="footer">
-        <p>Powered by <a href="https://simrsmu.com/" target="_blank">simrsmu.com</a></p>
+        <p>Powered by simrsmu.com</a></p>
     </div>
 </body>
 
