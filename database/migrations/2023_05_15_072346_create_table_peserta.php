@@ -13,17 +13,17 @@ class CreateTablePeserta extends Migration
      */
     public function up()
     {
-        Schema::create('table_peserta', function (Blueprint $table) {
+        Schema::create('peserta', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('ikut');
-            $table->integer('kloter');
-            $table->integer('bus');
+            $table->integer('kloter')->nullable();
+            $table->integer('bus')->nullable();
             $table->string('nama');
-            $table->integer('no_kursi');
-            $table->integer('kaos');
+            $table->integer('no_kursi')->nullable();
+            $table->string('kaos');
             $table->string('unit');
-            $table->string('penyakit');
-            $table->string('hp');
+            $table->string('penyakit')->nullable();
+            $table->string('hp')->nullable();
             $table->string('alasan')->nullable();
             $table->softDeletes();
             $table->timestamps();
@@ -37,6 +37,6 @@ class CreateTablePeserta extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('table_peserta');
+        Schema::dropIfExists('peserta');
     }
 }

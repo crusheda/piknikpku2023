@@ -20,3 +20,5 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('/', 'busReservationController');
+Route::get('/denah', 'busReservationController@denah')->name('denah');
+Route::get('/data', 'busReservationController@data')->name('data');

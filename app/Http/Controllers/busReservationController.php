@@ -18,7 +18,7 @@ class busReservationController extends Controller
      */
     public function index()
     {
-        return view('index'); // ->with('list', $data)
+        return view('index');
     }
 
     /**
@@ -39,7 +39,59 @@ class busReservationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'ikut' => 'required', // nullable
+            'nama' => 'required',
+            'unit' => 'required',
+            'kaos' => 'required',
+            ]);
+
+        if ($request->kloter == 1 && $request->bus == 1) {
+            $bus = 1;
+        }
+        if ($request->kloter == 1 && $request->bus == 2) {
+            $bus = 2;
+        }
+        if ($request->kloter == 2 && $request->bus == 1) {
+            $bus = 3;
+        }
+        if ($request->kloter == 2 && $request->bus == 2) {
+            $bus = 4;
+        }
+        if ($request->kloter == 3 && $request->bus == 1) {
+            $bus = 5;
+        }
+        if ($request->kloter == 3 && $request->bus == 2) {
+            $bus = 6;
+        }
+
+        $validasi = peserta::where('bus', $bus)->where('no_kursi',$request->no_kursi)->first();
+
+        if ($validasi == null) {
+            $data = new peserta;
+            $data->ikut = $request->ikut;
+            $data->nama = $request->nama;
+            $data->unit = $request->unit;
+            $data->kaos = $request->kaos;
+
+            if ($request->ikut == '1') {
+                $data->kloter = $request->kloter;
+                $data->bus = $bus;
+                $data->no_kursi = $request->no_kursi;
+                $data->penyakit = $request->penyakit;
+            } else {
+                if ($request->ikut == '0') {
+                    $data->alasan = $request->alasan;
+                }
+            }
+
+            $data->save();
+
+            return redirect()->back()->with('message','Reservasi Berhasil');
+        } else {
+            return redirect()->back()->withErrors('Nomor Kursi sudah terisi, silakan pilih kursi lain yang masih kosong');
+        }
+
     }
 
     /**
@@ -85,5 +137,42 @@ class busReservationController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function denah()
+    {
+        $bus1 = peserta::where('ikut', 1)->where('bus', 1)->get();
+        $bus2 = peserta::where('ikut', 1)->where('bus', 2)->get();
+        $bus3 = peserta::where('ikut', 1)->where('bus', 3)->get();
+        $bus4 = peserta::where('ikut', 1)->where('bus', 4)->get();
+        $bus5 = peserta::where('ikut', 1)->where('bus', 5)->get();
+        $bus6 = peserta::where('ikut', 1)->where('bus', 6)->get();
+
+        $data = [
+            'bus1' => $bus1,
+            'bus2' => $bus2,
+            'bus3' => $bus3,
+            'bus4' => $bus4,
+            'bus5' => $bus5,
+            'bus6' => $bus6,
+        ];
+
+        // print_r($bus1);
+        // die();
+
+        return view('denah')->with('list', $data);
+    }
+
+    public function data()
+    {
+        $show_ya = peserta::where('ikut', 1)->get();
+        $show_tdk = peserta::where('ikut', 0)->get();
+
+        $data = [
+            'show_ya' => $show_ya,
+            'show_tdk' => $show_tdk,
+        ];
+
+        return view('data')->with('list', $data);
     }
 }
